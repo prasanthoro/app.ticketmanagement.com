@@ -13,15 +13,31 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as UserTableImport } from './routes/userTable'
 import { Route as SignUpImport } from './routes/signUp'
 import { Route as SignInImport } from './routes/signIn'
+import { Route as ResetPasswordImport } from './routes/resetPassword'
+import { Route as ProfileImport } from './routes/profile'
+import { Route as ForgotPasswordImport } from './routes/forgotPassword'
+import { Route as DeleteProfileImport } from './routes/deleteProfile'
 import { Route as DashboardImport } from './routes/dashboard'
+import { Route as CreateTicketImport } from './routes/createTicket'
+import { Route as CommentImport } from './routes/comment'
+import { Route as AddAttachmentImport } from './routes/addAttachment'
+import { Route as AddAgentImport } from './routes/addAgent'
+import { Route as GetallcommentsTicketIdImport } from './routes/getallcomments/$ticket-id'
 
 // Create Virtual Routes
 
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const UserTableRoute = UserTableImport.update({
+  id: '/userTable',
+  path: '/userTable',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const SignUpRoute = SignUpImport.update({
   id: '/signUp',
@@ -35,9 +51,57 @@ const SignInRoute = SignInImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ResetPasswordRoute = ResetPasswordImport.update({
+  id: '/resetPassword',
+  path: '/resetPassword',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileRoute = ProfileImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ForgotPasswordRoute = ForgotPasswordImport.update({
+  id: '/forgotPassword',
+  path: '/forgotPassword',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DeleteProfileRoute = DeleteProfileImport.update({
+  id: '/deleteProfile',
+  path: '/deleteProfile',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const DashboardRoute = DashboardImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CreateTicketRoute = CreateTicketImport.update({
+  id: '/createTicket',
+  path: '/createTicket',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CommentRoute = CommentImport.update({
+  id: '/comment',
+  path: '/comment',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AddAttachmentRoute = AddAttachmentImport.update({
+  id: '/addAttachment',
+  path: '/addAttachment',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AddAgentRoute = AddAgentImport.update({
+  id: '/addAgent',
+  path: '/addAgent',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,6 +110,12 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const GetallcommentsTicketIdRoute = GetallcommentsTicketIdImport.update({
+  id: '/getallcomments/$ticket-id',
+  path: '/getallcomments/$ticket-id',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -58,11 +128,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/addAgent': {
+      id: '/addAgent'
+      path: '/addAgent'
+      fullPath: '/addAgent'
+      preLoaderRoute: typeof AddAgentImport
+      parentRoute: typeof rootRoute
+    }
+    '/addAttachment': {
+      id: '/addAttachment'
+      path: '/addAttachment'
+      fullPath: '/addAttachment'
+      preLoaderRoute: typeof AddAttachmentImport
+      parentRoute: typeof rootRoute
+    }
+    '/comment': {
+      id: '/comment'
+      path: '/comment'
+      fullPath: '/comment'
+      preLoaderRoute: typeof CommentImport
+      parentRoute: typeof rootRoute
+    }
+    '/createTicket': {
+      id: '/createTicket'
+      path: '/createTicket'
+      fullPath: '/createTicket'
+      preLoaderRoute: typeof CreateTicketImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/deleteProfile': {
+      id: '/deleteProfile'
+      path: '/deleteProfile'
+      fullPath: '/deleteProfile'
+      preLoaderRoute: typeof DeleteProfileImport
+      parentRoute: typeof rootRoute
+    }
+    '/forgotPassword': {
+      id: '/forgotPassword'
+      path: '/forgotPassword'
+      fullPath: '/forgotPassword'
+      preLoaderRoute: typeof ForgotPasswordImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileImport
+      parentRoute: typeof rootRoute
+    }
+    '/resetPassword': {
+      id: '/resetPassword'
+      path: '/resetPassword'
+      fullPath: '/resetPassword'
+      preLoaderRoute: typeof ResetPasswordImport
       parentRoute: typeof rootRoute
     }
     '/signIn': {
@@ -79,6 +205,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignUpImport
       parentRoute: typeof rootRoute
     }
+    '/userTable': {
+      id: '/userTable'
+      path: '/userTable'
+      fullPath: '/userTable'
+      preLoaderRoute: typeof UserTableImport
+      parentRoute: typeof rootRoute
+    }
+    '/getallcomments/$ticket-id': {
+      id: '/getallcomments/$ticket-id'
+      path: '/getallcomments/$ticket-id'
+      fullPath: '/getallcomments/$ticket-id'
+      preLoaderRoute: typeof GetallcommentsTicketIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -86,47 +226,140 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/addAgent': typeof AddAgentRoute
+  '/addAttachment': typeof AddAttachmentRoute
+  '/comment': typeof CommentRoute
+  '/createTicket': typeof CreateTicketRoute
   '/dashboard': typeof DashboardRoute
+  '/deleteProfile': typeof DeleteProfileRoute
+  '/forgotPassword': typeof ForgotPasswordRoute
+  '/profile': typeof ProfileRoute
+  '/resetPassword': typeof ResetPasswordRoute
   '/signIn': typeof SignInRoute
   '/signUp': typeof SignUpRoute
+  '/userTable': typeof UserTableRoute
+  '/getallcomments/$ticket-id': typeof GetallcommentsTicketIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/addAgent': typeof AddAgentRoute
+  '/addAttachment': typeof AddAttachmentRoute
+  '/comment': typeof CommentRoute
+  '/createTicket': typeof CreateTicketRoute
   '/dashboard': typeof DashboardRoute
+  '/deleteProfile': typeof DeleteProfileRoute
+  '/forgotPassword': typeof ForgotPasswordRoute
+  '/profile': typeof ProfileRoute
+  '/resetPassword': typeof ResetPasswordRoute
   '/signIn': typeof SignInRoute
   '/signUp': typeof SignUpRoute
+  '/userTable': typeof UserTableRoute
+  '/getallcomments/$ticket-id': typeof GetallcommentsTicketIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
+  '/addAgent': typeof AddAgentRoute
+  '/addAttachment': typeof AddAttachmentRoute
+  '/comment': typeof CommentRoute
+  '/createTicket': typeof CreateTicketRoute
   '/dashboard': typeof DashboardRoute
+  '/deleteProfile': typeof DeleteProfileRoute
+  '/forgotPassword': typeof ForgotPasswordRoute
+  '/profile': typeof ProfileRoute
+  '/resetPassword': typeof ResetPasswordRoute
   '/signIn': typeof SignInRoute
   '/signUp': typeof SignUpRoute
+  '/userTable': typeof UserTableRoute
+  '/getallcomments/$ticket-id': typeof GetallcommentsTicketIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/signIn' | '/signUp'
+  fullPaths:
+    | '/'
+    | '/addAgent'
+    | '/addAttachment'
+    | '/comment'
+    | '/createTicket'
+    | '/dashboard'
+    | '/deleteProfile'
+    | '/forgotPassword'
+    | '/profile'
+    | '/resetPassword'
+    | '/signIn'
+    | '/signUp'
+    | '/userTable'
+    | '/getallcomments/$ticket-id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/signIn' | '/signUp'
-  id: '__root__' | '/' | '/dashboard' | '/signIn' | '/signUp'
+  to:
+    | '/'
+    | '/addAgent'
+    | '/addAttachment'
+    | '/comment'
+    | '/createTicket'
+    | '/dashboard'
+    | '/deleteProfile'
+    | '/forgotPassword'
+    | '/profile'
+    | '/resetPassword'
+    | '/signIn'
+    | '/signUp'
+    | '/userTable'
+    | '/getallcomments/$ticket-id'
+  id:
+    | '__root__'
+    | '/'
+    | '/addAgent'
+    | '/addAttachment'
+    | '/comment'
+    | '/createTicket'
+    | '/dashboard'
+    | '/deleteProfile'
+    | '/forgotPassword'
+    | '/profile'
+    | '/resetPassword'
+    | '/signIn'
+    | '/signUp'
+    | '/userTable'
+    | '/getallcomments/$ticket-id'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  AddAgentRoute: typeof AddAgentRoute
+  AddAttachmentRoute: typeof AddAttachmentRoute
+  CommentRoute: typeof CommentRoute
+  CreateTicketRoute: typeof CreateTicketRoute
   DashboardRoute: typeof DashboardRoute
+  DeleteProfileRoute: typeof DeleteProfileRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  ProfileRoute: typeof ProfileRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
+  UserTableRoute: typeof UserTableRoute
+  GetallcommentsTicketIdRoute: typeof GetallcommentsTicketIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  AddAgentRoute: AddAgentRoute,
+  AddAttachmentRoute: AddAttachmentRoute,
+  CommentRoute: CommentRoute,
+  CreateTicketRoute: CreateTicketRoute,
   DashboardRoute: DashboardRoute,
+  DeleteProfileRoute: DeleteProfileRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  ProfileRoute: ProfileRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
+  UserTableRoute: UserTableRoute,
+  GetallcommentsTicketIdRoute: GetallcommentsTicketIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -140,22 +373,62 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/addAgent",
+        "/addAttachment",
+        "/comment",
+        "/createTicket",
         "/dashboard",
+        "/deleteProfile",
+        "/forgotPassword",
+        "/profile",
+        "/resetPassword",
         "/signIn",
-        "/signUp"
+        "/signUp",
+        "/userTable",
+        "/getallcomments/$ticket-id"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
+    "/addAgent": {
+      "filePath": "addAgent.tsx"
+    },
+    "/addAttachment": {
+      "filePath": "addAttachment.tsx"
+    },
+    "/comment": {
+      "filePath": "comment.tsx"
+    },
+    "/createTicket": {
+      "filePath": "createTicket.tsx"
+    },
     "/dashboard": {
       "filePath": "dashboard.tsx"
+    },
+    "/deleteProfile": {
+      "filePath": "deleteProfile.tsx"
+    },
+    "/forgotPassword": {
+      "filePath": "forgotPassword.tsx"
+    },
+    "/profile": {
+      "filePath": "profile.tsx"
+    },
+    "/resetPassword": {
+      "filePath": "resetPassword.tsx"
     },
     "/signIn": {
       "filePath": "signIn.tsx"
     },
     "/signUp": {
       "filePath": "signUp.tsx"
+    },
+    "/userTable": {
+      "filePath": "userTable.tsx"
+    },
+    "/getallcomments/$ticket-id": {
+      "filePath": "getallcomments/$ticket-id.tsx"
     }
   }
 }

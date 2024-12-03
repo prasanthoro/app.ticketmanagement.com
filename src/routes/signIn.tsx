@@ -1,80 +1,8 @@
-// import { createFileRoute } from "@tanstack/react-router";
-// import { useState } from "react";
-// import { useNavigate } from "@tanstack/react-router";
-
-// export const Route = createFileRoute("/signIn")({
-//   component: RouteComponent,
-// });
-
-// function RouteComponent() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const navigate = useNavigate();
-//   const handleLogin = async (e) => {
-//     e.preventDefault();
-//     //console.log(email)
-//     const fldata = {
-//       email: email,
-//       password: password,
-//     };
-//     try {
-//       const response = await fetch(
-//         "https://dev-api.peepul.farm/v1.0/users/signin",
-//         {
-//           method: "POST",
-
-//           headers: { "Content-Type": "application/json" },
-
-//           body: JSON.stringify(fldata),
-//         }
-//       );
-
-//       const data = await response.json();
-//       if (data.data.access_token) {
-//         localStorage.setItem("email", email);
-//         localStorage.setItem("password", password);
-//         localStorage.setItem("accessToken", data.data.access_token);
-//         navigate({ to: "/dashboard" });
-//       } else {
-//         alert("Login failed:s");
-//       }
-//     } catch (error) {
-//       console.error("Error:", error);
-//       alert("Login failed. Please try again.");
-//     }
-//   };
-//   return (
-//     <div>
-//       <h2>Login</h2>
-//       <form onSubmit={handleLogin}>
-//         <div>
-//           <label>Email:</label>
-//           <input
-//             type="email"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             required
-//           />
-//           {/* <center><p>farmer123@gmail.com</p></center> */}
-//         </div>
-//         <div>
-//           <label>Password:</label>
-//           <input
-//             type="password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <button type="submit">Login</button>
-//       </form>
-//     </div>
-//   );
-// }
-
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/signIn")({
   component: RouteComponent,
@@ -84,17 +12,16 @@ function RouteComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const fldata = {
       email: email,
       password: password,
     };
-
     try {
       const response = await fetch(
-        "https://dev-api.peepul.farm/v1.0/users/signin",
+        "https://api-ticketmanagement.onrender.com/v1.0/user/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -103,107 +30,71 @@ function RouteComponent() {
       );
 
       const data = await response.json();
-      if (data.data.access_token) {
-        localStorage.setItem("email", email);
-        localStorage.setItem("password", password);
-        localStorage.setItem("accessToken", data.data.access_token);
-        navigate({ to: "/dashboard" });
-      } else {
-        alert("Login failed.");
+      const statuscodes = response.status;
+      switch (statuscodes) {
+        case 200:
+          if (data.data) {
+            localStorage.setItem("email", email);
+            localStorage.setItem("password", password);
+            localStorage.setItem("accessToken", data.data.token);
+            localStorage.setItem("user_id", data.data.user_id);
+            navigate({ to: "/dashboard" });
+          } else {
+            alert("login completed but not the accesstoken fetched");
+          }
+          break;
+        case 422:
+          alert("server was unable to proccess the request");
+          break;
+        case 401:
+          alert("Unauthorized accessing. Please check your credentials.");
+          break;
+        case 408:
+          alert("your requst was timeout");
+          break;
+        case 400:
+          alert("Invalid email or password");
+          break;
+
+        case 500:
+          alert("Server error. Please try again later.");
+          break;
+        case 405:
+          alert("you need correct method");
+          break;
+        default:
+          alert(`Unexpected erroring: ${statuscodes}`);
+          break;
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Login failed. Please try again.");
+      alert("some unexpected error pls try again");
     }
   };
-
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
+    <div>
       <h2>Login</h2>
-      <form
-        onSubmit={handleLogin}
-        style={{
-          display: "inline-block",
-          textAlign: "left",
-          padding: "80px",
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-        }}
-      >
+      <form onSubmit={handleLogin}>
         <div>
           <label>Email:</label>
-          <input
+          <Input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{
-              display: "block",
-              marginBottom: "20px",
-              padding: "15px",
-              width: "100%",
-              maxWidth: "500px",
-              borderRadius: "4px",
-              border: "1px solid #ddd",
-              fontSize: "16px",
-            }}
           />
         </div>
         <div>
           <label>Password:</label>
-          <input
+          <Input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{
-              display: "block",
-              marginBottom: "20px",
-              padding: "15px",
-              width: "100%",
-              maxWidth: "500px",
-              borderRadius: "4px",
-              border: "1px solid #ddd",
-              fontSize: "16px",
-            }}
           />
         </div>
-        <button
-          type="submit"
-          style={{
-            display: "block",
-            marginTop: "20px",
-            padding: "15px",
-            width: "100%",
-            maxWidth: "500px",
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "16px",
-          }}
-        >
-          Login
-        </button>
+        <Button type="submit">Login</Button>
       </form>
-      <p style={{ marginTop: "20px" }}>
-        Don't have an account?{" "}
-        <button
-          onClick={() => navigate({ to: "/signUp" })}
-          style={{
-            background: "none",
-            border: "none",
-            color: "blue",
-            cursor: "pointer",
-            textDecoration: "underline",
-            fontSize: "16px",
-          }}
-        >
-          Sign Up
-        </button>
-      </p>
     </div>
   );
 }

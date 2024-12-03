@@ -16,6 +16,27 @@ export const Route = createRootRoute({
           <Link to="/signUp" className="nav-link [&.active]:font-bold">
             Sign Up
           </Link>
+          <Link to="/forgotPassword" className="nav-link [&.active]:font-bold">
+            Forgot Password
+          </Link>
+          <Link to="/profile" className="nav-link [&.active]:font-bold">
+            Profile
+          </Link>
+          <Link to="/deleteProfile" className="nav-link [&.active]:font-bold">
+            Delete Profile
+          </Link>
+          <Link to="/resetPassword" className="nav-link [&.active]:font-bold">
+            Reset Password
+          </Link>
+          <Link to="/createTicket" className="nav-link [&.active]:font-bold">
+            Create Ticket
+          </Link>
+          <Link to="/userTable" className="nav-link [&.active]:font-bold">
+            Tickets
+          </Link>
+          {/* <Link to="/createTicket" className="nav-link [&.active]:font-bold">
+            Create Ticket
+          </Link> */}
         </div>
       </div>
       <hr />
