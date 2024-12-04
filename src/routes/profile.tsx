@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/profile")({
@@ -8,7 +8,9 @@ export const Route = createFileRoute("/profile")({
 function Profile() {
   const [profile, setProfile] = useState<any>(null);
   const [message, setMessage] = useState<string>("");
+  const [deleteMessage, setDeleteMessage] = useState<string>("");
   const token = localStorage.getItem("accessToken");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) {
@@ -31,7 +33,6 @@ function Profile() {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Profile data:", data);
           setProfile(data);
         } else {
           const errorData = await response.json();
@@ -45,6 +46,10 @@ function Profile() {
     fetchProfile();
   }, [token]);
 
+  const handleNavigateToUpdate = () => {
+    navigate({ to: "/updateProfile" });
+  };
+
   if (!token) {
     return <p>{message}</p>;
   }
@@ -53,6 +58,13 @@ function Profile() {
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h2>Profile</h2>
       {message && <p style={{ color: "red" }}>{message}</p>}
+      {deleteMessage && (
+        <p
+          style={{ color: deleteMessage.includes("success") ? "green" : "red" }}
+        >
+          {deleteMessage}
+        </p>
+      )}
       {profile?.data ? (
         <div>
           <p>
@@ -61,6 +73,20 @@ function Profile() {
           <p>
             <strong>Email:</strong> {profile.data.email}
           </p>
+          <button
+            onClick={handleNavigateToUpdate}
+            style={{
+              marginTop: "20px",
+              padding: "10px 20px",
+              backgroundColor: "#007bff",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Update Profile
+          </button>
         </div>
       ) : (
         !message && <p>Loading profile...</p>

@@ -79,7 +79,7 @@ function RouteComponent() {
       alert(err.message);
     },
   });
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!reply.trim()) {
       alert("Please enter a valid comment");

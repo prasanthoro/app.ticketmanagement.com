@@ -32,9 +32,6 @@ function AddAttachment() {
     setError("");
 
     try {
-      //   const formData = new FormData();
-      //   formData.append(file);
-
       const response = await fetch(
         `https://api-ticketmanagement.onrender.com/v1.0/tickets/${ticketId}/attachment`,
         {

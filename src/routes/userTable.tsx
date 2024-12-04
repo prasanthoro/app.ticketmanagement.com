@@ -96,13 +96,6 @@ function RouteComponent() {
     if (filterTimeout) {
       clearTimeout(filterTimeout);
     }
-
-    // Debounce filter updates to avoid making too many API requests
-    // setFilterTimeout(
-    //   setTimeout(() => {
-    //     queryClient.invalidateQueries(["tickets", cpage, value]);
-    //   }, 500)
-    // );
     const newTimeout = setTimeout(() => {
       queryClient.invalidateQueries(["tickets", cpage, value]);
     }, 500);
@@ -154,9 +147,6 @@ function RouteComponent() {
                   <td>{ticket.status || "Not Assigned"}</td>
                   <td>{new Date(ticket.created_at).toLocaleDateString()}</td>
                   <td>{ticket.requested_by}</td>
-                  {/* <td>
-                    <Link to={"/updateticket/" + ticket.id}>Update</Link>
-                  </td> */}
                   <td>
                     <Link
                       to={"/updateticket/" + ticket.id}

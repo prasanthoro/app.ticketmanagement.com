@@ -14,6 +14,8 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as UserTableImport } from './routes/userTable'
+import { Route as UserManagementImport } from './routes/user-management'
+import { Route as UpdateProfileImport } from './routes/updateProfile'
 import { Route as SignUpImport } from './routes/signUp'
 import { Route as SignInImport } from './routes/signIn'
 import { Route as ResetPasswordImport } from './routes/resetPassword'
@@ -36,6 +38,18 @@ const IndexLazyImport = createFileRoute('/')()
 const UserTableRoute = UserTableImport.update({
   id: '/userTable',
   path: '/userTable',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UserManagementRoute = UserManagementImport.update({
+  id: '/user-management',
+  path: '/user-management',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UpdateProfileRoute = UpdateProfileImport.update({
+  id: '/updateProfile',
+  path: '/updateProfile',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -205,6 +219,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignUpImport
       parentRoute: typeof rootRoute
     }
+    '/updateProfile': {
+      id: '/updateProfile'
+      path: '/updateProfile'
+      fullPath: '/updateProfile'
+      preLoaderRoute: typeof UpdateProfileImport
+      parentRoute: typeof rootRoute
+    }
+    '/user-management': {
+      id: '/user-management'
+      path: '/user-management'
+      fullPath: '/user-management'
+      preLoaderRoute: typeof UserManagementImport
+      parentRoute: typeof rootRoute
+    }
     '/userTable': {
       id: '/userTable'
       path: '/userTable'
@@ -237,6 +265,8 @@ export interface FileRoutesByFullPath {
   '/resetPassword': typeof ResetPasswordRoute
   '/signIn': typeof SignInRoute
   '/signUp': typeof SignUpRoute
+  '/updateProfile': typeof UpdateProfileRoute
+  '/user-management': typeof UserManagementRoute
   '/userTable': typeof UserTableRoute
   '/getallcomments/$ticket-id': typeof GetallcommentsTicketIdRoute
 }
@@ -254,6 +284,8 @@ export interface FileRoutesByTo {
   '/resetPassword': typeof ResetPasswordRoute
   '/signIn': typeof SignInRoute
   '/signUp': typeof SignUpRoute
+  '/updateProfile': typeof UpdateProfileRoute
+  '/user-management': typeof UserManagementRoute
   '/userTable': typeof UserTableRoute
   '/getallcomments/$ticket-id': typeof GetallcommentsTicketIdRoute
 }
@@ -272,6 +304,8 @@ export interface FileRoutesById {
   '/resetPassword': typeof ResetPasswordRoute
   '/signIn': typeof SignInRoute
   '/signUp': typeof SignUpRoute
+  '/updateProfile': typeof UpdateProfileRoute
+  '/user-management': typeof UserManagementRoute
   '/userTable': typeof UserTableRoute
   '/getallcomments/$ticket-id': typeof GetallcommentsTicketIdRoute
 }
@@ -291,6 +325,8 @@ export interface FileRouteTypes {
     | '/resetPassword'
     | '/signIn'
     | '/signUp'
+    | '/updateProfile'
+    | '/user-management'
     | '/userTable'
     | '/getallcomments/$ticket-id'
   fileRoutesByTo: FileRoutesByTo
@@ -307,6 +343,8 @@ export interface FileRouteTypes {
     | '/resetPassword'
     | '/signIn'
     | '/signUp'
+    | '/updateProfile'
+    | '/user-management'
     | '/userTable'
     | '/getallcomments/$ticket-id'
   id:
@@ -323,6 +361,8 @@ export interface FileRouteTypes {
     | '/resetPassword'
     | '/signIn'
     | '/signUp'
+    | '/updateProfile'
+    | '/user-management'
     | '/userTable'
     | '/getallcomments/$ticket-id'
   fileRoutesById: FileRoutesById
@@ -341,6 +381,8 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
+  UpdateProfileRoute: typeof UpdateProfileRoute
+  UserManagementRoute: typeof UserManagementRoute
   UserTableRoute: typeof UserTableRoute
   GetallcommentsTicketIdRoute: typeof GetallcommentsTicketIdRoute
 }
@@ -358,6 +400,8 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
+  UpdateProfileRoute: UpdateProfileRoute,
+  UserManagementRoute: UserManagementRoute,
   UserTableRoute: UserTableRoute,
   GetallcommentsTicketIdRoute: GetallcommentsTicketIdRoute,
 }
@@ -384,6 +428,8 @@ export const routeTree = rootRoute
         "/resetPassword",
         "/signIn",
         "/signUp",
+        "/updateProfile",
+        "/user-management",
         "/userTable",
         "/getallcomments/$ticket-id"
       ]
@@ -423,6 +469,12 @@ export const routeTree = rootRoute
     },
     "/signUp": {
       "filePath": "signUp.tsx"
+    },
+    "/updateProfile": {
+      "filePath": "updateProfile.tsx"
+    },
+    "/user-management": {
+      "filePath": "user-management.tsx"
     },
     "/userTable": {
       "filePath": "userTable.tsx"
