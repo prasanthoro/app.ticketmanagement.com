@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "typecheck": "tsc --noEmit",
+    "dev": "vite --port=3001",
+    "build": "vite build && echo {\"rewrites\": [{ \"source\": \"/(.*)\", \"destination\": \"/index.html\" }]} > dist/vercel.json",
+    "serve": "vite preview",
+    "start": "vite"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.61.3",
