@@ -42,7 +42,9 @@ function UserManagement() {
         setMessage(data.message || `Failed to fetch ${type}s.`);
       }
     } catch (error) {
-      setMessage(error.message);
+      if (error instanceof Error) {
+        setMessage(error.message);
+      }
     } finally {
       setLoading(false);
     }

@@ -64,6 +64,8 @@ function CreateTicket() {
       }
     } catch (error) {
       setMessage("Network error. Please try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 

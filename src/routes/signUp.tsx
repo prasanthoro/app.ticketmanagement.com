@@ -14,26 +14,26 @@ function Signup() {
 
   const navigate = useNavigate();
 
-  const validatePassword = (password: string) => {
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
-    return regex.test(password);
-  };
+  // const validatePassword = (password: string) => {
+  //   const regex =
+  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+  //   return regex.test(password);
+  // };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!full_name.trim()) {
-      setErrorMessage("Full name is required.");
-      return;
-    }
+    // if (!full_name.trim()) {
+    //   setErrorMessage("Full name is required.");
+    //   // return;
+    // }
 
-    if (!validatePassword(password)) {
-      setErrorMessage(
-        "Password must be at least 8 characters long and include uppercase, lowercase, a number, and a special character."
-      );
-      return;
-    }
+    // if (!validatePassword(password)) {
+    //   setErrorMessage(
+    //     "Password must be at least 8 characters long and include uppercase, lowercase, a number, and a special character."
+    //   );
+    //   return;
+    // }
 
     setErrorMessage("");
     setSuccessMessage("");
@@ -97,7 +97,7 @@ function Signup() {
             type="text"
             value={full_name}
             onChange={(e) => setFullName(e.target.value)}
-            required
+            // required
             style={{
               display: "block",
               marginBottom: "15px",
@@ -115,7 +115,7 @@ function Signup() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
+            // required
             style={{
               display: "block",
               marginBottom: "15px",
@@ -133,7 +133,7 @@ function Signup() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
+            // required
             style={{
               display: "block",
               marginBottom: "15px",

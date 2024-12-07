@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,7 +16,6 @@ function RouteComponent() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("accessToken");
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,13 +40,15 @@ function RouteComponent() {
         throw new Error(`Error: ${response.status}`);
       }
 
-      const result = await response.json();
+      // const result = await response.json();
       setResponseMessage("Comment added successfully!");
       setTicketId("");
       setComment("");
       setResponseMessage("");
     } catch (err) {
-      setError(err.message || "Failed to add comment.");
+      if (err instanceof Error) {
+        setError(err.message || "Failed to add comment.");
+      }
     } finally {
       setLoading(false);
     }

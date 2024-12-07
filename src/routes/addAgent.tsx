@@ -31,7 +31,11 @@ function AddAgent() {
     }
   }, [token]);
 
-  const handleChange = (e: React.FormEvent) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -81,7 +85,8 @@ function AddAgent() {
       // setResponseMessage(`Agent added successfully: ${result.message}`);
       // console.log(result);
     } catch (err) {
-      setError(err.message || "Something went wrong");
+      const errorMessage = (err as Error).message;
+      setError(errorMessage || "Something went wrong");
     } finally {
       setLoading(false);
     }
